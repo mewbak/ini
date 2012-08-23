@@ -20,4 +20,18 @@ This yields a slice of string values:
 	}
 
 We can use this to conveniently supply rotating encryption keys without
-having our code worry about changing ini-key names.
+having our code worry about changing ini key names.
+
+
+### Usage
+
+    go get github.com/jteeuwen/ini
+
+Refer to the package documentation for usage examples.
+
+
+### License
+
+Unless otherwise stated, all of the work in this project is subject to a
+1-clause BSD license. Its contents can be found in the enclosed LICENSE file.
+
