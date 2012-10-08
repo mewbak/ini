@@ -31,13 +31,13 @@ Example of writing an ini file:
 	gfx.Set("fullscreen", fullscreen)
 
 	// Write contents to a file.
-	err := file.Write("myfile.ini")
+	err := file.Save("myfile.ini")
 
 
 Example of reading an ini file:
 
 	file := ini.New()
-	err := file.Read("myfile.ini")
+	err := file.Load("myfile.ini")
 
 	if err != nil {
 		return
