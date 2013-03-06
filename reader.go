@@ -59,14 +59,20 @@ func (ir *Reader) Read(data []byte, f TokenHandler) {
 }
 
 func (ir *Reader) comment() bool {
-	if ir.accept(';') {
-		for !ir.acceptUntil('\n') {
-			ir.skip()
-		}
-		ir.skip()
-		return true
+	ir.acceptSpace()
+	ir.ignore()
+
+	if !ir.accept(';') {
+		return false
 	}
-	return false
+
+	if !ir.acceptUntil('\n') {
+		return false
+	}
+
+	ir.ignore()
+	ir.skip()
+	return true
 }
 
 func (ir *Reader) section() bool {
@@ -155,7 +161,7 @@ func (ir *Reader) acceptUntil(v rune) bool {
 		}
 	}
 
-	return ir.pos > pos
+	return ir.pos >= pos
 }
 
 // acceptUntilAny consumes runes for as long as they
@@ -175,7 +181,7 @@ func (ir *Reader) acceptUntilAny(argv ...rune) (r rune, b bool) {
 		}
 	}
 
-	b = ir.pos > pos
+	b = ir.pos >= pos
 	return
 }
 
@@ -197,7 +203,7 @@ func (ir *Reader) acceptSpace() bool {
 		}
 	}
 
-	return ir.pos > pos
+	return ir.pos >= pos
 }
 
 // next retuns the next unicode codepoint in the input.
