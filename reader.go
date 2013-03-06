@@ -42,6 +42,10 @@ func (ir *Reader) Read(data []byte, f TokenHandler) {
 	ir.pos = 0
 
 	for {
+		if ir.comment() {
+			continue
+		}
+
 		if ir.section() {
 			continue
 		}
@@ -52,6 +56,17 @@ func (ir *Reader) Read(data []byte, f TokenHandler) {
 
 		return
 	}
+}
+
+func (ir *Reader) comment() bool {
+	if ir.accept(';') {
+		for !ir.acceptUntil('\n') {
+			ir.skip()
+		}
+		ir.skip()
+		return true
+	}
+	return false
 }
 
 func (ir *Reader) section() bool {
@@ -122,7 +137,7 @@ func (ir *Reader) accept(v rune) bool {
 	return true
 }
 
-// acceptUntil consumes runes for as long as they 
+// acceptUntil consumes runes for as long as they
 // are /not/ equal to the supplied rune.
 func (ir *Reader) acceptUntil(v rune) bool {
 	pos := ir.pos
@@ -143,7 +158,7 @@ func (ir *Reader) acceptUntil(v rune) bool {
 	return ir.pos > pos
 }
 
-// acceptUntilAny consumes runes for as long as they 
+// acceptUntilAny consumes runes for as long as they
 // are /not/ in the list of runes
 func (ir *Reader) acceptUntilAny(argv ...rune) (r rune, b bool) {
 	var err error
@@ -164,7 +179,7 @@ func (ir *Reader) acceptUntilAny(argv ...rune) (r rune, b bool) {
 	return
 }
 
-// acceptSpace consumes runes for as long as they 
+// acceptSpace consumes runes for as long as they
 // qualify as unicode whitespace.
 func (ir *Reader) acceptSpace() bool {
 	pos := ir.pos
