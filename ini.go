@@ -37,13 +37,17 @@ func (i *File) Section(name string) Section {
 }
 
 // Load loads ini data from the given file.
-func (i *File) Load(file string) (err error) {
+func (i *File) Load(file string) error {
 	data, err := ioutil.ReadFile(file)
-
 	if err != nil {
-		return
+		return err
 	}
 
+	return i.LoadBytes(data)
+}
+
+// LoadBytes loads ini data from the given byte set.
+func (i *File) LoadBytes(data []byte) (err error) {
 	var r Reader
 	var key string
 

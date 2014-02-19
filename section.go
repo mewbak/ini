@@ -22,7 +22,7 @@ func (s Section) Set(key string, value interface{}) {
 //    s := file.Section("test")
 //    s.SetList("foo", "a", "b", "c")
 //    s.SetList("bar")
-//    
+//
 //    [test]
 //    foo < a
 //    foo < b
